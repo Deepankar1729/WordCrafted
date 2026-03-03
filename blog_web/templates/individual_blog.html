@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+
+<!-- Page content-->
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-8">
+            <!-- Post content-->
+            <article>
+                <!-- Post header-->
+                <header class="mb-4">
+                    <!-- Post title-->
+                    <h1 class="fw-bolder mb-1">{{single_blog.title}}</h1>
+                    <!-- Post meta content-->
+                    <div class="text-muted fst-italic mb-2">Posted on {{single_blog.created_at}} by {{single_blog.author}}</div>
+                    <!-- Post category-->
+                    <span class="badge bg-warning text-decoration-none text-dark">{{single_blog.category}}</span>
+                </header>
+                <!-- Preview image figure-->
+                <figure class="mb-4"><img class="img-fluid rounded" src={{single_blog.featured_image.url}} alt="..." /></figure>
+                <!-- Post content-->
+                <section class="mb-5">
+                    <p class="fs-5 mb-4">{{single_blog.short_description}}</p>
+                    <p class="fs-5 mb-4">{{single_blog.blog_body}}</p>
+
+                    {% comment %} Comments {% endcomment %}
+                    <h4>Comments ({{comment_count}})</h4>
+                    {% if comments %}
+                        
+                        {% for comment in comments %}
+                            <div class="card mt-2">
+                                <div class="card-body">
+                                    <span>
+                                        <small><strong>{{comment.user}}</strong></small>
+                                        <small> | {{comment.created_at | timesince}} ago</small>
+                                    </span>
+                                    <p class="card-text">
+                                        {{comment.comment}}
+                                    </p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                            
+                    {% else %}
+                        <p>No comments yet.</p>
+                    {% endif %}
+                    <br>
+                    <div class="form-group">
+                        {% if user.is_authenticated %}
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <textarea name="comment" class="form-control" placeholder="Write a comment"></textarea>
+                                    <button type="submit" class="btn btn-warning mt-2">Submit</button>
+                                </div> 
+                            </form>
+                        {% else %}
+                            <p>Please <span><a href="{% url 'login' %}">login</a></span> to write a comment!</p>
+                        {% endif %}
+                    </div>
+                </section>
+            </article>
+        </div>
+        <!-- Side widgets-->
+        <div class="col-lg-4">
+            <!-- Categories widget-->
+            <div class="card mb-4 p-3">
+                <h4 class="font-italic">Categories</h4>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <ul class="list-unstyled mb-0"> 
+                                {% for cat in categories %}
+                                    <li><a href="{% url 'blogs_by_category' cat.id %}">{{cat.category_name}}</a></li>
+                                {% endfor %}       
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Side widget-->
+            <div class="card mb-4 p-3">
+                <h4 class="font-italic">Follow Me</h4>
+                <ol class="list-unstyled">
+                    
+                    {% for p in links %}
+                        <li><a href="{{p.link}}" target="_blank">{{p.platform}}</a></li>
+                    {% endfor %}
+                        
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
