@@ -6,6 +6,7 @@ from django.db.models import Q
 from .forms import RegistrationForm
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout
+from django.views.decorators.cache import never_cache
 
 # Create your views here.
 def home(request):
@@ -29,12 +30,7 @@ def home(request):
 
 def blogs_by_category(request, category_id):
     blogs = Blog.objects.filter(status = 'Published', category_id = category_id)
-    # try except block
-    # try:
-    #     category = Category.objects.get(pk = category_id)
-    # except:
-    #     return redirect('home')
-
+    
     category = get_object_or_404(Category, pk = category_id)
 
     context = {
@@ -76,11 +72,13 @@ def search(request):
     }
     return render(request, 'search.html', context)
 
+@never_cache
 def register(request):
     if request.method == "POST":
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            login(request, user)
             return redirect('home')
 
     else:
@@ -88,6 +86,7 @@ def register(request):
 
     return render(request, 'register.html', {'form': form})
 
+@never_cache
 def login_view(request):
     if request.method == "POST":
         form = AuthenticationForm(request, request.POST)
@@ -101,6 +100,7 @@ def login_view(request):
 
     return render(request, 'login.html', {'form': form})
 
+@never_cache
 def logout_view(request):
     logout(request)
     return redirect('home')
