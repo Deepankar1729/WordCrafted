@@ -11,6 +11,7 @@ from django.views.decorators.cache import never_cache
 # Create your views here.
 
 @never_cache
+@login_required
 def dashboard(request):
     category_count = Category.objects.all().count()
     blog_count = Blog.objects.all().count()
@@ -21,6 +22,8 @@ def dashboard(request):
     }
     return render(request, 'dashboard/dashboard.html', context)
 
+@never_cache
+@login_required
 def categories(request):
     
     return render(request, 'dashboard/categories.html')
@@ -63,6 +66,7 @@ def delete_category(request, pk):
         return redirect('categories')
 
 @never_cache
+@login_required
 def posts(request):
     posts = Blog.objects.all()
     return render(request, 'dashboard/posts.html', {'posts': posts})
