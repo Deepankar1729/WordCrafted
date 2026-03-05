@@ -6,9 +6,11 @@ from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import permission_required
+from django.views.decorators.cache import never_cache
 
 # Create your views here.
 
+@never_cache
 def dashboard(request):
     category_count = Category.objects.all().count()
     blog_count = Blog.objects.all().count()
@@ -23,6 +25,7 @@ def categories(request):
     
     return render(request, 'dashboard/categories.html')
 
+@never_cache
 @staff_member_required
 def add_category(request):
     if request.method == 'POST':
@@ -35,6 +38,7 @@ def add_category(request):
 
     return render(request, 'dashboard/add_category.html', {'form': form})
 
+@never_cache
 @staff_member_required
 def edit_category(request, pk):
     category = get_object_or_404(Category, pk = pk)
@@ -49,6 +53,7 @@ def edit_category(request, pk):
 
     return render(request, 'dashboard/edit_category.html', {'form' : form})
 
+@never_cache
 @staff_member_required
 def delete_category(request, pk):
     category = get_object_or_404(Category, pk = pk)
@@ -57,10 +62,12 @@ def delete_category(request, pk):
         category.delete()
         return redirect('categories')
 
+@never_cache
 def posts(request):
     posts = Blog.objects.all()
     return render(request, 'dashboard/posts.html', {'posts': posts})
 
+@never_cache
 @staff_member_required
 def add_post(request):
     if request.method == 'POST':
@@ -78,6 +85,7 @@ def add_post(request):
 
     return render(request, 'dashboard/add_post.html', {'form': form})
 
+@never_cache
 @staff_member_required
 def edit_post(request, pk):
     blog = get_object_or_404(Blog, pk=pk)
@@ -94,6 +102,7 @@ def edit_post(request, pk):
 
     return render(request, 'dashboard/edit_post.html', {'form': form})
 
+@never_cache
 @staff_member_required
 def delete_post(request, pk):
     post = get_object_or_404(Blog, pk=pk)
@@ -102,12 +111,14 @@ def delete_post(request, pk):
         post.delete()
         return redirect('posts')
 
+@never_cache
 @staff_member_required
 @permission_required('auth.view_user', raise_exception=True)
 def users(request):
     users = User.objects.all()
     return render(request, 'dashboard/users.html', {'users': users})
 
+@never_cache
 @staff_member_required
 @permission_required('auth.add_user', raise_exception=True)
 def add_user(request):
@@ -121,6 +132,7 @@ def add_user(request):
 
     return render(request, 'dashboard/add_user.html', {'form': form})
 
+@never_cache
 @staff_member_required
 @permission_required('auth.change_user', raise_exception=True)
 def edit_user(request, pk):
@@ -136,6 +148,7 @@ def edit_user(request, pk):
 
     return render(request, 'dashboard/edit_user.html', {'form': form})
 
+@never_cache
 @staff_member_required
 @permission_required('auth.delete_user', raise_exception=True)
 def delete_user(request, pk):
