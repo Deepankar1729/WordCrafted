@@ -48,6 +48,16 @@ Note:
 
 ---
 
+## 📷 Project Demo
+
+Editor Role  
+<video src="https://github.com/user-attachments/assets/9086487e-ab3e-458b-bd86-0fcea24a8283"></video>
+
+Superuser Role
+
+
+---
+
 ## 🧰 Tech Stack
 
 | Component | Technology Used |
@@ -55,23 +65,6 @@ Note:
 | **Backend** | Django |
 | **Frontend** | HTML, CSS, Bootstrap |
 | **Database** | SQLite |
-
----
-
-## 📷 Screenshots
-
-You can add screenshots of your project here.
-
-Example:
-
-Homepage  
-`/screenshots/homepage.png`
-
-Dashboard  
-`/screenshots/dashboard.png`
-
-Blog Post Page  
-`/screenshots/post.png`
 
 ---
 
