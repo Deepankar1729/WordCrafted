@@ -54,7 +54,7 @@ Editor Role
 <video src="https://github.com/user-attachments/assets/9086487e-ab3e-458b-bd86-0fcea24a8283"></video>
 
 Superuser Role
-
+<video src="https://github.com/user-attachments/assets/540c1540-c226-4523-aaf3-e6c4986b525a"></video>
 
 ---
 
