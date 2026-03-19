@@ -65,6 +65,7 @@ Superuser Role
 | **Backend** | Django |
 | **Frontend** | HTML, CSS, Bootstrap |
 | **Database** | SQLite |
+| **Deployment** | PythonAnywhere |
 
 ---
 
@@ -77,3 +78,7 @@ Superuser Role
 - 🔔 Notifications for comments and replies  
 
 ---
+
+## ⭐ Support  
+
+If you like this project, consider giving it a ⭐ on GitHub! 
